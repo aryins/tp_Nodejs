@@ -9,8 +9,8 @@ connectDB();
 
 // Iniciar servidor
 const server = app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`📝 API Health check: http://localhost:${PORT}/api/health`);
+  console.log(` Servidor corriendo en http://localhost:${PORT}`);
+  console.log(` API Health check: http://localhost:${PORT}/api/health`);
 });
 
 // Manejar cierre graceful
