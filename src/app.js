@@ -38,11 +38,4 @@ app.use(notFound);
 app.use(errorHandler);
 
 
-// Iniciar servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  connectMongoDb();
-  console.log(`Servidor corriendo en puerto ${PORT}`);
-});
-
 export default app;
