@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "chat-api",
   "version": "1.0.0",
   "description": "API para clon de chat",
