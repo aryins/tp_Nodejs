@@ -1,4 +1,4 @@
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   
   res.status(statusCode).json({
@@ -8,9 +8,9 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-const notFound = (req, res, next) => {
+export const notFound = (req, res, next) => {
   res.status(404);
   next(new Error(`Ruta no encontrada - ${req.originalUrl}`));
 };
 
-module.exports = { errorHandler, notFound };
+export default { errorHandler, notFound };

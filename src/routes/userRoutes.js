@@ -1,11 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const { createUser, getUsers, deleteUser, loginUser } = require('../controllers/userController');
-const { protect } = require('../middlewares/auth');
+import express from 'express';
+import { createUser, getUsers, deleteUser, loginUser } from '../controllers/userController.js';
+import { protect } from '../middlewares/auth.js';
 
-router.post('/register', createUser);
-router.post('/login', loginUser);
-router.get('/', protect, getUsers);
-router.delete('/:id', protect, deleteUser);
+const userRouter = express.Router();
 
-module.exports = router;
+userRouter.post('/register', createUser);
+userRouter.post('/login', loginUser);
+userRouter.get('/', protect, getUsers);
+userRouter.delete('/:id', protect, deleteUser);
+
+
+export default userRouter;

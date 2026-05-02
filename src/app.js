@@ -1,17 +1,26 @@
+import express, { json, urlencoded } from 'express';
+import cors from 'cors';
+import userRoutes from './routes/userRoutes.js';
+import chatRoutes from './routes/chatRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
+import { errorHandler, notFound } from './middlewares/errorHandler.js';
+import { mongoose } from 'mongoose';
 
-const express = require('express');
-const cors = require('cors');
-const userRoutes = require('./routes/userRoutes');
-const chatRoutes = require('./routes/chatRoutes');
-const messageRoutes = require('./routes/messageRoutes');
-const { errorHandler, notFound } = require('./middlewares/errorHandler');
+const connectMongoDb = async () => {
+  try {
+    await mongoose.connect("mongodb://localhost:27017");
+    console.log('Conectado a MongoDB');
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 const app = express();
 
 // Middlewares
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 // Rutas
 app.use('/api/users', userRoutes);
@@ -23,8 +32,17 @@ app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'API funcionando correctamente' });
 });
 
+
 // Manejo de errores
 app.use(notFound);
 app.use(errorHandler);
 
-module.exports = app;
+
+// Iniciar servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  connectMongoDb();
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+});
+
+export default app;

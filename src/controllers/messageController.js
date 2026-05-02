@@ -1,8 +1,8 @@
-const Message = require('../models/Message');
-const Chat = require('../models/Chat');
+import Message from '../models/Message.js';
+import Chat from '../models/Chat.js';
 
 // Enviar mensaje
-const sendMessage = async (req, res, next) => {
+export const sendMessage = async (req, res, next) => {
   try {
     const { chatId, content } = req.body;
     
@@ -38,7 +38,7 @@ const sendMessage = async (req, res, next) => {
 };
 
 // Obtener historial de mensajes de un chat
-const getMessages = async (req, res, next) => {
+export const getMessages = async (req, res, next) => {
   try {
     const { chatId } = req.params;
     const { page = 1, limit = 50 } = req.query;
@@ -74,5 +74,3 @@ const getMessages = async (req, res, next) => {
     next(error);
   }
 };
-
-module.exports = { sendMessage, getMessages };

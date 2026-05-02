@@ -1,7 +1,7 @@
-const Chat = require('../models/Chat');
+import Chat from '../models/Chat.js';
 
 // Crear chat
-const createChat = async (req, res, next) => {
+export const createChat = async (req, res, next) => {
   try {
     const { name, participants, type } = req.body;
     const chat = await Chat.create({
@@ -24,7 +24,7 @@ const createChat = async (req, res, next) => {
 };
 
 // Listar chats del usuario
-const getChats = async (req, res, next) => {
+export const getChats = async (req, res, next) => {
   try {
     const chats = await Chat.find({ participants: req.user.id })
       .populate('participants', '-password')
@@ -41,7 +41,7 @@ const getChats = async (req, res, next) => {
 };
 
 // Obtener chat por ID
-const getChatById = async (req, res, next) => {
+export const getChatById = async (req, res, next) => {
   try {
     const chat = await Chat.findById(req.params.id)
       .populate('participants', '-password');
@@ -62,5 +62,3 @@ const getChatById = async (req, res, next) => {
     next(error);
   }
 };
-
-module.exports = { createChat, getChats, getChatById };

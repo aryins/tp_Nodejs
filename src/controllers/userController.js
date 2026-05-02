@@ -1,12 +1,13 @@
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
+import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+
+const generateToken = (userId) => {
+  return jwt.sign({ userId }, process.env.JWT_SECRET);
 };
 
 // Crear usuario (registro)
-const createUser = async (req, res, next) => {
+export const createUser = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
     
@@ -36,7 +37,7 @@ const createUser = async (req, res, next) => {
 };
 
 // Listar usuarios
-const getUsers = async (req, res, next) => {
+export const getUsers = async (req, res, next) => {
   try {
     const users = await User.find().select('-password');
     res.status(200).json({
@@ -50,7 +51,7 @@ const getUsers = async (req, res, next) => {
 };
 
 // Eliminar usuario
-const deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res, next) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
@@ -70,7 +71,7 @@ const deleteUser = async (req, res, next) => {
 };
 
 // Login
-const loginUser = async (req, res, next) => {
+export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -96,5 +97,3 @@ const loginUser = async (req, res, next) => {
     next(error);
   }
 };
-
-module.exports = { createUser, getUsers, deleteUser, loginUser };
